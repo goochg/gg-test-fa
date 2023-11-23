@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "gg_test_fa": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7262",
+      "launchBrowser": false
+    }
+  }
+}
