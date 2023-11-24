@@ -19,7 +19,6 @@ public class UploadRecord
     
     public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload")] HttpRequest request)
     {
-        Console.WriteLine(">>This has been hit");
         return new ObjectResult("This was hit ok");
     }
 }
