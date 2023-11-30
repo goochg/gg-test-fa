@@ -42,8 +42,7 @@ public class UploadRecord
         return new ObjectResult($"This was hit ok. {record.Name} is {record.Age}.");
     }*/
 
-   
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload")] HttpRequest request)
+   public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload")] HttpRequest request)
     {
 
         List<(int, string)> errors = new List<(int, string)>();
@@ -71,7 +70,7 @@ public class UploadRecord
             }
             else
             {
-                return new BadRequestObjectResult("Null or empty body");
+                return new BadRequestObjectResult("Null or empty content");
             }
 
         }
