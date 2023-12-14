@@ -55,12 +55,12 @@ public class UploadRecord
                 int count = 0;
                 foreach (var obj in objectArray)
                 {
-                    count++;
                     try
                     {
                         Record record = JsonConvert.DeserializeObject<Record>(obj.ToString());
                         var js = JsonSerializer.Serialize(record);
                         _fileService.SaveFile(record, $"{record.Name}.json");
+                        count++;
                     }
                     catch (Exception e)
                     {
@@ -70,19 +70,19 @@ public class UploadRecord
             }
             else
             {
-                return new BadRequestObjectResult("Null or empty content");
+                return new BadRequestObjectResult("Function App>> Null or empty content");
             }
 
         }
         catch (Exception e)
         {
-            return new BadRequestObjectResult($"This failed: {e.Message}");
+            return new BadRequestObjectResult($"Function App>> This failed: {e.Message}");
         }
 
         return (errors.Count) switch
         {
-            0 => new OkObjectResult("Added: "),
-            _ => new BadRequestObjectResult($"Records Failed: {errors.Count} errors: {errors.ToArray()}")
+            0 => new OkObjectResult("Function App>> Added: "),
+            _ => new BadRequestObjectResult($"Function App>> Records Failed: {errors.Count} errors: {errors.ToArray()}")
         };
     }
 }
