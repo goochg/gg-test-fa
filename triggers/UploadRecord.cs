@@ -23,7 +23,7 @@ public class UploadRecord
     }
 
     [FunctionName("upload")]
-    
+
     /*public async Task<IActionResult> Run2([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload")] HttpRequest request)
     {
         Record record = new Record();
@@ -42,9 +42,17 @@ public class UploadRecord
         return new ObjectResult($"This was hit ok. {record.Name} is {record.Age}.");
     }*/
 
-   public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload")] HttpRequest request)
+    public async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload")] HttpRequest request)
     {
+        return new OkObjectResult("Function App hit");
+    }
 
+    /*
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "upload")] HttpRequest request)
+   {
+
+       List<string> times = new();
         List<(int, string)> errors = new List<(int, string)>();
         try
         {
@@ -60,6 +68,9 @@ public class UploadRecord
                         Record record = JsonConvert.DeserializeObject<Record>(obj.ToString());
                         var js = JsonSerializer.Serialize(record);
                         _fileService.SaveFile(record, $"{record.Name}.json");
+                        var noo = DateTime.Now.ToFileTimeUtc();
+                        //"yyyy’-‘MM’-‘dd’T’HH’:’mm’:’ss.fffffffK
+                        times.Add($"{record.Name}--{DateTime.FromFileTimeUtc(noo).ToString("yyyy-MMM-dd:HHmmss.fffff")}");
                         count++;
                     }
                     catch (Exception e)
@@ -81,10 +92,11 @@ public class UploadRecord
 
         return (errors.Count) switch
         {
-            0 => new OkObjectResult("Function App>> Added: "),
+            0 => new OkObjectResult($"Function App>> Added: {string.Join("/n", times)}"),
             _ => new BadRequestObjectResult($"Function App>> Records Failed: {errors.Count} errors: {errors.ToArray()}")
         };
     }
+*/
 }
 
 /*
@@ -101,6 +113,11 @@ public class UploadRecord
 {OK}
 ]
 
+--133471078237795032
+--133471078237800216
+
+--133471085621731956---2023-Dec-15:100922.17319/n
+--133471085621839231---2023-Dec-15:100922.18392
 
 
 206 ----  Result - 2/3 Records updated, record at index failed a invalid Schema
